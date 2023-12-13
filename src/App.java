@@ -15,7 +15,6 @@ public class App extends PApplet {
     }
 
     public void setup() {
-        background(0);
         frameRate(60);
 
     }

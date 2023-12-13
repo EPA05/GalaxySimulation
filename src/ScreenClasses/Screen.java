@@ -6,6 +6,10 @@ public class Screen {
 
   }
 
+  public void show() {
+
+  }
+
   public void update() {
 
   }

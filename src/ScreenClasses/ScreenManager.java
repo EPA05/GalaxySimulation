@@ -13,6 +13,7 @@ public class ScreenManager {
   }
 
   public void run() {
+    s.show();
     s.update();
   }
 

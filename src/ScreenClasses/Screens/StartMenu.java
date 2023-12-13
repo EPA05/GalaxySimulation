@@ -5,7 +5,6 @@ import ScreenClasses.Screen;
 import ScreenClasses.ScreenManager;
 
 public class StartMenu extends Screen {
-
   PApplet p;
   ScreenManager sm;
 
@@ -23,10 +22,9 @@ public class StartMenu extends Screen {
   }
 
   public void update() {
-    show();
 
     if (p.mousePressed) {
-      sm.setScreen(new Simulation());
+      sm.setScreen(new Simulation(p));
     }
   }
 }
