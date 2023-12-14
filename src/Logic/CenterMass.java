@@ -5,7 +5,7 @@ import processing.core.*;
 public class CenterMass {
   PApplet p;
   int radius;
-  double mass;
+  public double mass;
   PVector position;
   int colour;
 

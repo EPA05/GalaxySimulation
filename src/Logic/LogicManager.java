@@ -54,4 +54,8 @@ public class LogicManager {
       stars.update();
     }
   }
+
+  public CenterMass getCenterMass() {
+    return centerMass;
+  }
 }
