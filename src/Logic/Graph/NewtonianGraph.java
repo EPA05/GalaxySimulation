@@ -32,7 +32,6 @@ public class NewtonianGraph {
         float mappedV = PApplet.map(v, 0, 60, 0, gb.graphHeight - 2 * gb.distanceFromEdge);
         float mappedR = PApplet.map(rInKpc, 0, 8, 0, gb.graphWidth - 2 * gb.distanceFromEdge);
         graphShape.vertex(mappedR, -mappedV);
-        System.out.println(v);
       }
       graphShape.endShape();
       graphCalculated = true;
