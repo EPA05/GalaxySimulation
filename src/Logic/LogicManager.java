@@ -18,4 +18,5 @@ public class LogicManager {
     centerMass.show();
     star.show();
   }
+
 }

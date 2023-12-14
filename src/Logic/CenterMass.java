@@ -21,4 +21,5 @@ public class CenterMass {
     p.fill(colour);
     p.circle(position.x, position.y, radius);
   }
+
 }
