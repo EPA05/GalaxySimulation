@@ -12,6 +12,7 @@ public class Star {
   int colour;
   double timeConstant;
   PVector velocity;
+  double angle;
   double kpcToMeters = 3.0857e19;
   final double G = 6.674e-11;
 
@@ -22,7 +23,9 @@ public class Star {
     colour = c;
     radius = 15;
     pixelDistance = p.height / 2 / (7.3 * kpcToMeters);
-    position = new PVector((float) (p.width / 2 + distance * pixelDistance), p.height / 2);
+    angle = p.random(PConstants.TWO_PI); // Generate a random angle
+    position = new PVector((float) (p.width / 2 + distance * pixelDistance * Math.cos(angle)),
+        (float) (p.height / 2 + distance * pixelDistance * Math.sin(angle)));
     timeConstant = (60 * 60 * 24 * 365 * 1e6) / p.frameRate;
     velocity = new PVector(0, 0);
   }
@@ -49,4 +52,5 @@ public class Star {
     velocity = VelocityDirection.mult((float) orbitalSpeed); // Calculate the velocity of the planet
     velocity.mult((float) pixelDistance); // Convert velocity from m/s to pixels/s
   }
+
 }
