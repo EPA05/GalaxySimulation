@@ -36,7 +36,7 @@ public class Star {
   }
 
   public void update() {
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 30; i++) {
       velocity(centerMass);
       position.add(PVector.mult(velocity, (float) timeConstant));
     }
