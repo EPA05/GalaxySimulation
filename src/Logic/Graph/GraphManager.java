@@ -26,7 +26,7 @@ public class GraphManager {
   public void run() {
     gb.show();
     ng.drawGraph(centerMass, gb);
-    grv.draw();
     vdg.drawGraph(gb);
+    grv.draw();
   }
 }

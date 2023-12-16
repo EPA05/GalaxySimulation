@@ -1,6 +1,5 @@
 package Logic.Graph;
 
-import org.apache.commons.math3.fitting.WeightedObservedPoints;
 import processing.core.*;
 
 public class GraphOfRealVelocity {
@@ -24,54 +23,41 @@ public class GraphOfRealVelocity {
   }
 
   public void draw() {
-    drawRealVelocities(gb);
-  }
-
-  public void drawGraph(GraphBackground gb) {
-    p.stroke(0, 255, 0); // Set stroke color to magenta
-    p.noFill();
-
-    WeightedObservedPoints points = new WeightedObservedPoints();
-
-    for (double[] point : data) {
-      points.add(point[0], point[1]);
-    }
-    graphCalculated = true;
-    if (!graphCalculated) {
-      graphShape = p.createShape();
-      graphShape.beginShape();
-      for (int i = 0; i < data.length; i++) {
-        float x = PApplet.map((float) data[i][0], (float) 0.68, 30, 0, gb.graphWidth - 2 * gb.distanceFromEdge);
-        float v = PApplet.map((float) data[i][1], (float) 8.41, 60, 0, gb.graphHeight - 2 * gb.distanceFromEdge);
-        graphShape.vertex(x, -v);
-
-      }
-      graphShape.endShape();
-      graphCalculated = true;
-    }
-
     p.pushMatrix();
     p.translate(gb.graphX + gb.distanceFromEdge, gb.graphY + gb.graphHeight - gb.distanceFromEdge);
-    p.shape(graphShape);
     drawRealVelocities(gb);
     p.popMatrix();
     p.noStroke();
   }
 
   public void drawRealVelocities(GraphBackground gb) {
-    p.pushMatrix();
-    p.translate(gb.graphX + gb.distanceFromEdge, gb.graphY + gb.graphHeight - gb.distanceFromEdge);
+
+    double[] uncertainties = { 35.9, 16.3, 16.1, 15.4, 7.61, 10.3, 8.09, 7.6, 3.03, 5.31, 7.51, 5.32, 5.21, 5.67, 5.39,
+        4.34, 2.36, 0.89, 2.84, 0.88, 1.23, 1.57, 3.0, 3.0,
+        2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0,
+        2.0, 2.0, 3.0, 3.0 };
 
     for (int i = 0; i < data.length; i++) {
-      float mappedR = PApplet.map((float) data[i][0], 0, 30, 0, gb.graphWidth - 2 * gb.distanceFromEdge);
-      float mappedV = PApplet.map((float) data[i][1], 0, 250, 0, gb.graphHeight - 2 * gb.distanceFromEdge);
+      float mappedR = PApplet.map((float) data[i][0], (float) 0, 30, 0,
+          gb.graphWidth - 2 * gb.distanceFromEdge);
+      float mappedV = PApplet.map((float) data[i][1], (float) 0, 250, 0,
+          gb.graphHeight - 2 * gb.distanceFromEdge);
+      float mappedUncertainty = PApplet.map((float) uncertainties[i], 0, (float) 250, 0,
+          gb.graphHeight - 2 * gb.distanceFromEdge);
+
       p.stroke(255, 255, 0);
       p.fill(255, 255, 0);
       p.ellipse(mappedR, -mappedV, 5, 5); // Draw a circle with a diameter of 10
-      p.noStroke();
+
+      // Draw uncertainty as a line segment
+      p.stroke(255);
+      p.line(mappedR, -mappedV + mappedUncertainty, mappedR, -mappedV - mappedUncertainty);
+
+      // Draw lines at the top and bottom of the data point
+      p.stroke(255);
+      p.line(mappedR - 3, -mappedV - mappedUncertainty, mappedR + 3, -mappedV - mappedUncertainty);
+      p.line(mappedR - 3, -mappedV + mappedUncertainty, mappedR + 3, -mappedV + mappedUncertainty);
     }
 
-    p.popMatrix();
-    p.noStroke();
   }
 }

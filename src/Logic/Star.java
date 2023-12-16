@@ -21,8 +21,9 @@ public class Star {
   public double R_D;
   public double SIGMA_0;
   double gamma = 0.5;
-  Double I_0; // solLum/pc2
+  double I_0; // solLum/pc2
   double v_disk;
+  double RHO_0;
   public double kpcToMeters = 3.0857e19;
   public double kpcToKm = 3.0857e16;
   final double G = 6.674e-11; // m^3/kg*s^2
@@ -39,9 +40,9 @@ public class Star {
     angle = p.random(PConstants.TWO_PI); // Generate a random angle
 
     R_D = 2.5 * kpcToKm;
-
     I_0 = 1602.62 * 1e6; // solLum/kpc^2
     SIGMA_0 = (gamma * I_0 * 1.989e30) / (Math.pow(kpcToKm, 2)); // kg/kpc^2
+    RHO_0 = 1.1e7 / Math.pow(kpcToKm, 3); // kg/kpc^3
 
     position = new PVector((float) (p.width / 2 + distance * kpcToMeters * pixelDistance * Math.cos(angle)),
         (float) (p.height / 2 + distance * kpcToMeters * pixelDistance * Math.sin(angle)));
@@ -91,6 +92,6 @@ public class Star {
     PVector VelocityDirection = directionToSun.rotate(PConstants.HALF_PI); // Rotate 90 degrees to get a
     velocity = VelocityDirection.mult((float) v_disk); // Calculate the velocity of the planet
     velocity.mult((float) pixelDistanceKm); // Convert velocity from m/s to pixels/s
-
   }
+
 }
