@@ -106,16 +106,16 @@ public class Star {
 
   void applyVelocity(Visualinterface vi) {
 
-    if (vi.pressed1) {
+    if (vi.GetIsPressed1()) {
       speed = 0;
       newtonsVelocity(centerMass);
-    } else if (vi.pressed2) {
+    } else if (vi.GetIsPressed2()) {
       speed = 0;
       getVisibleDiskVelocity();
-    } else if (vi.pressed3) {
+    } else if (vi.GetIsPressed3()) {
       speed = 0;
       getDarkMatteVelocity();
-    } else if (vi.pressed4) {
+    } else if (vi.GetIsPressed4()) {
       speed = 0;
       getDiskAndDarkMatterVelocity();
     }

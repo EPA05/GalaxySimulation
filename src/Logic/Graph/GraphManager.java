@@ -3,6 +3,7 @@ package Logic.Graph;
 import Logic.CenterMass;
 import processing.core.*;
 import Logic.Star;
+import Logic.Visualinterface;
 
 public class GraphManager {
   PApplet p;
@@ -14,8 +15,9 @@ public class GraphManager {
   Star s;
   DarkMatterGraph dmg;
   DiskAndDarkMatterGraph dadmg;
+  GraphInformation gi;
 
-  public GraphManager(PApplet p, CenterMass centerMass, Star s) {
+  public GraphManager(PApplet p, CenterMass centerMass, Star s, Visualinterface vi) {
     this.p = p;
     this.centerMass = centerMass;
     this.s = s;
@@ -25,14 +27,29 @@ public class GraphManager {
     vdg = new VisibleDiskGraph(p, ng, s);
     dmg = new DarkMatterGraph(p, s);
     dadmg = new DiskAndDarkMatterGraph(p, s);
+    gi = new GraphInformation(p);
   }
 
   public void run() {
     gb.show();
-    ng.drawGraph(centerMass, gb);
-    vdg.drawGraph(gb);
-    dmg.drawGraph(gb);
-    dadmg.drawGraph(gb);
+    gi.show();
+
+    if (gi.GetIsPressed1()) {
+      ng.drawGraph(centerMass, gb);
+    }
+
+    if (gi.GetIsPressed2()) {
+      vdg.drawGraph(gb);
+    }
+
+    if (gi.GetIsPressed3()) {
+      dmg.drawGraph(gb);
+    }
+
+    if (gi.GetIsPressed4()) {
+      dadmg.drawGraph(gb);
+    }
+
     grv.draw();
   }
 }

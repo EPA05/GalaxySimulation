@@ -127,19 +127,19 @@ public class Visualinterface {
 
   }
 
-  public boolean isPressed1() {
+  public boolean GetIsPressed1() {
     return pressed1;
   }
 
-  public boolean isPressed2() {
+  public boolean GetIsPressed2() {
     return pressed2;
   }
 
-  public boolean isPressed3() {
+  public boolean GetIsPressed3() {
     return pressed3;
   }
 
-  public boolean isPressed4() {
+  public boolean GetIsPressed4() {
     return pressed4;
   }
 
