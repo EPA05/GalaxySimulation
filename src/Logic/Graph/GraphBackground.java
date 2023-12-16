@@ -55,23 +55,23 @@ public class GraphBackground {
     // Draw the vertical lines on the x-axis
     p.textSize(15);
     p.stroke(0, 255, 0);
-    int numVerticalLines = 9;
+    int numVerticalLines = 11;
     float verticalLineSpacing = (float) (graphWidth - 2 * distanceFromEdge) / (numVerticalLines - 1);
     for (int i = 0; i < numVerticalLines; i++) {
       float x = graphX + distanceFromEdge + i * verticalLineSpacing;
       p.line(x, graphY + graphHeight - distanceFromEdge, x, graphY + graphHeight - distanceFromEdge + 5);
-      p.text((i) + " kpc", x - 10, graphY + graphHeight - distanceFromEdge + 20); // Add text at each line
+      p.text((i * 3) + " kpc", x - 10, graphY + graphHeight - distanceFromEdge + 20); // Add text at each line
     }
 
     // Draw the horizontal lines on the y-axis
     p.textSize(15);
     p.stroke(255, 255, 0);
-    int numHorizontalLines = 7;
+    int numHorizontalLines = 6;
     float horizontalLineSpacing = (float) (graphHeight - 2 * distanceFromEdge) / (numHorizontalLines - 1);
     for (int i = 0; i < numHorizontalLines; i++) {
       float y = graphY + graphHeight - distanceFromEdge - i * horizontalLineSpacing;
       p.line(graphX + distanceFromEdge, y, graphX + distanceFromEdge - 5, y);
-      p.text((i * 10) + " km/s", graphX + distanceFromEdge - 55, y + 5); // Add text at each line
+      p.text((i * 50) + " km/s", graphX + distanceFromEdge - 55, y + 5); // Add text at each line
     }
     p.noStroke();
   }
