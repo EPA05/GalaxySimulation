@@ -22,6 +22,7 @@ public class Star {
   double I_0; // solLum/pc2
   double v_disk;
   double v_DM;
+  double v_total;
   double r;
   public double R_D;
   public double r_c;
@@ -61,26 +62,16 @@ public class Star {
   }
 
   public void update() {
-    for (int i = 0; i < 10; i++) {
-      // newtonsVelocity(centerMass);
-      // visibleDiskVelocity();
-      darkMatteVelocity();
-      position.add(PVector.mult(velocity, (float) timeConstant));
-    }
+    applyVelocity();
   }
 
-  void newtonsVelocity(CenterMass centerMass) {
+  double newtonsVelocity(CenterMass centerMass) {
     double orbitalSpeed = Math.sqrt((G * centerMass.mass) / (distance * kpcToMeters)); // Calculate the orbital speed of
-                                                                                       // the planet
-    PVector directionToSun = PVector.sub(centerMass.position, position); // Vector from planet to sun
-    directionToSun.normalize(); // Normalize to get a unit vector
-    PVector VelocityDirection = directionToSun.rotate(PConstants.HALF_PI); // Rotate 90 degrees to get a
-    // perpendicular
-    velocity = VelocityDirection.mult((float) orbitalSpeed); // Calculate the velocity of the planet
-    velocity.mult((float) pixelDistance); // Convert velocity from m/s to pixels/s
+                                                                                       // the plane
+    return orbitalSpeed;
   }
 
-  void visibleDiskVelocity() {
+  double getVisibleDiskVelocity() {
 
     double y = r / (2 * R_D);
 
@@ -92,23 +83,34 @@ public class Star {
     double result = i0 * k0 - i1 * k1;
 
     v_disk = Math.sqrt((4 * Math.PI * G_km * SIGMA_0 * R_D * y * y * result));
-
-    PVector directionToSun = PVector.sub(centerMass.position, position); // Vector from planet to sun
-    directionToSun.normalize(); // Normalize to get a unit vector
-    PVector VelocityDirection = directionToSun.rotate(PConstants.HALF_PI); // Rotate 90 degrees to get a
-    velocity = VelocityDirection.mult((float) v_disk); // Calculate the velocity of the planet
-    velocity.mult((float) pixelDistanceKm); // Convert velocity from m/s to pixels/s
+    return v_disk;
   }
 
-  void darkMatteVelocity() {
-
+  double darkMatteVelocity() {
     v_DM = Math.sqrt(((4 * Math.PI * G_km * RHO_0 * Math.pow(r_c, 3)) / r) * (r / r_c - (Math.atan(r / r_c))));
+    return v_DM;
+  }
 
+  double getDiskAndDarkMatterVelocity() {
+    getVisibleDiskVelocity();
+    darkMatteVelocity();
+    v_total = Math.sqrt(Math.pow(v_disk, 2) + Math.pow(v_DM, 2));
+    return v_total;
+  }
+
+  void applyVelocity() {
+
+    getDiskAndDarkMatterVelocity();
+    // newtonsVelocity(centerMass);
     PVector directionToSun = PVector.sub(centerMass.position, position); // Vector from planet to sun
     directionToSun.normalize(); // Normalize to get a unit vector
     PVector VelocityDirection = directionToSun.rotate(PConstants.HALF_PI); // Rotate 90 degrees to get a
     velocity = VelocityDirection.mult((float) v_DM); // Calculate the velocity of the planet
     velocity.mult((float) pixelDistanceKm); // Convert velocity from m/s to pixels/s
-  }
 
+    for (int i = 0; i < 10; i++) {
+      position.add(PVector.mult(velocity, (float) timeConstant));
+    }
+
+  }
 }

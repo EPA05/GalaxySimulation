@@ -58,6 +58,5 @@ public class GraphOfRealVelocity {
       p.line(mappedR - 3, -mappedV - mappedUncertainty, mappedR + 3, -mappedV - mappedUncertainty);
       p.line(mappedR - 3, -mappedV + mappedUncertainty, mappedR + 3, -mappedV + mappedUncertainty);
     }
-
   }
 }
