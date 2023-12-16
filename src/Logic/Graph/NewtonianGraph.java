@@ -20,13 +20,13 @@ public class NewtonianGraph {
   }
 
   public void drawGraph(CenterMass centerMass, GraphBackground gb) {
-    p.stroke(255, 0, 255); // Set stroke color to magenta
+    p.stroke(125, 125, 125); // Set stroke color to magenta
     p.noFill();
 
     if (!graphCalculated) {
       graphShape = p.createShape();
       graphShape.beginShape();
-      for (r = (float) (0.68 * kpcToMeters); r < 30 * kpcToMeters; r += 0.01 * kpcToMeters) {
+      for (r = (float) (0.59 * kpcToMeters); r < 30 * kpcToMeters; r += 0.01 * kpcToMeters) {
         v = (float) (Math.sqrt((G * centerMass.mass) / r)) / 1000;
 
         float rInKpc = (float) (r * 3.2408e-20);

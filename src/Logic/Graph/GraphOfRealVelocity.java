@@ -5,8 +5,6 @@ import processing.core.*;
 public class GraphOfRealVelocity {
   PApplet p;
   GraphBackground gb;
-  private boolean graphCalculated = false;
-  private PShape graphShape;
 
   // Define your points
   double[][] data = {
@@ -45,18 +43,14 @@ public class GraphOfRealVelocity {
       float mappedUncertainty = PApplet.map((float) uncertainties[i], 0, (float) 250, 0,
           gb.graphHeight - 2 * gb.distanceFromEdge);
 
-      p.stroke(255, 255, 0);
-      p.fill(255, 255, 0);
+      p.stroke(255);
+      p.fill(255);
       p.ellipse(mappedR, -mappedV, 5, 5); // Draw a circle with a diameter of 10
 
       // Draw uncertainty as a line segment
       p.stroke(255);
       p.line(mappedR, -mappedV + mappedUncertainty, mappedR, -mappedV - mappedUncertainty);
 
-      // Draw lines at the top and bottom of the data point
-      p.stroke(255);
-      p.line(mappedR - 3, -mappedV - mappedUncertainty, mappedR + 3, -mappedV - mappedUncertainty);
-      p.line(mappedR - 3, -mappedV + mappedUncertainty, mappedR + 3, -mappedV + mappedUncertainty);
     }
   }
 }

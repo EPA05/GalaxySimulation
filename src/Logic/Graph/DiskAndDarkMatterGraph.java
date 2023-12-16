@@ -1,36 +1,34 @@
 package Logic.Graph;
 
-import processing.core.PApplet;
-import processing.core.PShape;
 import Logic.Star;
 import cern.jet.math.Bessel;
+import processing.core.PApplet;
+import processing.core.PShape;
 
-public class VisibleDiskGraph {
+public class DiskAndDarkMatterGraph {
   PApplet p;
-  NewtonianGraph ng;
   GraphBackground gb;
   Star s;
   float r;
-  float v;
-  float v_disk;
+
   private boolean graphCalculated = false;
   private PShape graphShape;
 
-  public VisibleDiskGraph(PApplet p, NewtonianGraph ng, Star s) {
+  public DiskAndDarkMatterGraph(PApplet p, Star s) {
     this.p = p;
-    this.ng = ng;
     this.s = s;
 
   }
 
   public void drawGraph(GraphBackground gb) {
-    p.stroke(7, 239, 255); // Set stroke color to magenta
+    p.stroke(21, 96, 189); // Set stroke color to magenta
     p.noFill();
 
     if (!graphCalculated) {
       graphShape = p.createShape();
       graphShape.beginShape();
       for (r = (float) (0.01 * s.kpcToKm); r < 30 * s.kpcToKm; r += 0.01 * s.kpcToKm) {
+
         double y = r / (2 * s.R_D);
 
         double i0 = Bessel.i0(y);
@@ -40,9 +38,15 @@ public class VisibleDiskGraph {
 
         double result = i0 * k0 - i1 * k1;
 
-        v_disk = (float) Math.sqrt((4 * Math.PI * s.G_km * s.SIGMA_0 * s.R_D * y * y * result));
+        double v_disk = (float) Math.sqrt((4 * Math.PI * s.G_km * s.SIGMA_0 * s.R_D * y * y * result));
+
+        double v_DM = Math
+            .sqrt(((4 * Math.PI * s.G_km * s.RHO_0 * Math.pow(s.r_c, 3)) / r) * (r / s.r_c - (Math.atan(r / s.r_c))));
+
+        double v_total = Math.sqrt(Math.pow(v_disk, 2) + Math.pow(v_DM, 2));
+
         float rInKpc = (float) (r * 3.2408e-17);
-        float mappedV = PApplet.map(v_disk, 0, 250, 0, gb.graphHeight - 2 * gb.distanceFromEdge);
+        float mappedV = PApplet.map((float) v_total, 0, 250, 0, gb.graphHeight - 2 * gb.distanceFromEdge);
         float mappedR = PApplet.map(rInKpc, 0, 30, 0, gb.graphWidth - 2 * gb.distanceFromEdge);
         graphShape.vertex(mappedR, -mappedV);
       }
@@ -55,5 +59,4 @@ public class VisibleDiskGraph {
     p.popMatrix();
     p.noStroke();
   }
-
 }

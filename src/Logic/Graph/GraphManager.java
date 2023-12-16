@@ -13,6 +13,7 @@ public class GraphManager {
   VisibleDiskGraph vdg;
   Star s;
   DarkMatterGraph dmg;
+  DiskAndDarkMatterGraph dadmg;
 
   public GraphManager(PApplet p, CenterMass centerMass, Star s) {
     this.p = p;
@@ -23,13 +24,15 @@ public class GraphManager {
     grv = new GraphOfRealVelocity(p, gb);
     vdg = new VisibleDiskGraph(p, ng, s);
     dmg = new DarkMatterGraph(p, s);
+    dadmg = new DiskAndDarkMatterGraph(p, s);
   }
 
   public void run() {
     gb.show();
     ng.drawGraph(centerMass, gb);
     vdg.drawGraph(gb);
-    grv.draw();
     dmg.drawGraph(gb);
+    dadmg.drawGraph(gb);
+    grv.draw();
   }
 }
