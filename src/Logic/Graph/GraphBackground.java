@@ -39,7 +39,7 @@ public class GraphBackground {
         graphY + graphHeight - distanceFromEdge);
     p.fill(255);
     p.textSize(20);
-    p.text("Distance [AU]", graphWidth / 2 - 30, graphY + graphHeight - 30);
+    p.text("Distance [kpc]", graphWidth / 2 - 30, graphY + graphHeight - 30);
 
     // Draw the y-axis
     p.stroke(0, 0, 255); // Set stroke color to blue

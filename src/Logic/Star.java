@@ -7,6 +7,7 @@ import cern.jet.math.Bessel;
 public class Star {
   PApplet p;
   CenterMass centerMass;
+  Visualinterface vi;
 
   int radius;
   double distance;
@@ -14,7 +15,6 @@ public class Star {
   double pixelDistance;
   double pixelDistanceKm;
   int colour;
-
   double timeConstant;
   PVector velocity;
   double angle;
@@ -24,6 +24,7 @@ public class Star {
   double v_DM;
   double v_total;
   double r;
+  double speed;
   public double R_D;
   public double r_c;
   public double SIGMA_0;
@@ -33,9 +34,10 @@ public class Star {
   final double G = 6.674e-11; // m^3/kg*s^2
   public final double G_km = 6.674e-20; // km^3/kg*s^2
 
-  public Star(PApplet p, Double d, int c, CenterMass centerMass) {
+  public Star(PApplet p, Double d, int c, CenterMass centerMass, Visualinterface vi) {
     this.p = p;
     this.centerMass = centerMass;
+    this.vi = vi;
     distance = d;
     colour = c;
     radius = 10;
@@ -62,13 +64,14 @@ public class Star {
   }
 
   public void update() {
-    applyVelocity();
+    applyVelocity(vi);
   }
 
   double newtonsVelocity(CenterMass centerMass) {
     double orbitalSpeed = Math.sqrt((G * centerMass.mass) / (distance * kpcToMeters)); // Calculate the orbital speed of
-                                                                                       // the plane
-    return orbitalSpeed;
+                                                                                       // // the plane
+    speed = orbitalSpeed / 1000; // Convert from m/s to km/s
+    return speed;
   }
 
   double getVisibleDiskVelocity() {
@@ -83,29 +86,44 @@ public class Star {
     double result = i0 * k0 - i1 * k1;
 
     v_disk = Math.sqrt((4 * Math.PI * G_km * SIGMA_0 * R_D * y * y * result));
-    return v_disk;
+    speed = v_disk;
+    return speed;
   }
 
-  double darkMatteVelocity() {
+  double getDarkMatteVelocity() {
     v_DM = Math.sqrt(((4 * Math.PI * G_km * RHO_0 * Math.pow(r_c, 3)) / r) * (r / r_c - (Math.atan(r / r_c))));
-    return v_DM;
+    speed = v_DM;
+    return speed;
   }
 
   double getDiskAndDarkMatterVelocity() {
-    getVisibleDiskVelocity();
-    darkMatteVelocity();
+    v_disk = getVisibleDiskVelocity();
+    v_DM = getDarkMatteVelocity();
     v_total = Math.sqrt(Math.pow(v_disk, 2) + Math.pow(v_DM, 2));
-    return v_total;
+    speed = v_total;
+    return speed;
   }
 
-  void applyVelocity() {
+  void applyVelocity(Visualinterface vi) {
 
-    getDiskAndDarkMatterVelocity();
-    // newtonsVelocity(centerMass);
+    if (vi.pressed1) {
+      speed = 0;
+      newtonsVelocity(centerMass);
+    } else if (vi.pressed2) {
+      speed = 0;
+      getVisibleDiskVelocity();
+    } else if (vi.pressed3) {
+      speed = 0;
+      getDarkMatteVelocity();
+    } else if (vi.pressed4) {
+      speed = 0;
+      getDiskAndDarkMatterVelocity();
+    }
+
     PVector directionToSun = PVector.sub(centerMass.position, position); // Vector from planet to sun
     directionToSun.normalize(); // Normalize to get a unit vector
     PVector VelocityDirection = directionToSun.rotate(PConstants.HALF_PI); // Rotate 90 degrees to get a
-    velocity = VelocityDirection.mult((float) v_DM); // Calculate the velocity of the planet
+    velocity = VelocityDirection.mult((float) speed); // Calculate the velocity of the planet
     velocity.mult((float) pixelDistanceKm); // Convert velocity from m/s to pixels/s
 
     for (int i = 0; i < 10; i++) {

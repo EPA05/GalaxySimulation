@@ -20,6 +20,7 @@ public class CenterMass {
   public void show() {
     p.fill(colour);
     p.circle(position.x, position.y, radius);
+    p.noFill();
   }
 
 }

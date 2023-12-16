@@ -15,6 +15,7 @@ public class Simulation extends Screen {
     this.p = p;
     lm = new LogicManager(p);
     gm = new GraphManager(p, lm.getCenterMass(), lm.getStar());
+
   }
 
   public void update() {
