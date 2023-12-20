@@ -9,28 +9,28 @@ public class Star {
   CenterMass centerMass;
   Visualinterface vi;
 
-  int radius;
-  double distance;
-  PVector position;
-  double pixelDistance;
-  double pixelDistanceKm;
-  int colour;
-  double timeConstant;
-  PVector velocity;
-  double angle;
-  double gamma = 0.5;
+  int radius; // Radius of the planet
+  double distance; // Distance from the sun
+  PVector position; // Position of the planet
+  double pixelDistance; // Constant to convert pixels to meters
+  double pixelDistanceKm; // Constant to convert pixels to km
+  int colour; // Colour of the planet
+  double timeConstant; // Constant to speed up the simulation
+  PVector velocity; // Velocity of the planet
+  double angle; // Angle of the planet
+  double gamma = 0.5; // mass to light ratio
   double I_0; // solLum/pc2
-  double v_disk;
-  double v_DM;
-  double v_total;
-  double r;
-  double speed;
-  public double R_D;
-  public double r_c;
-  public double SIGMA_0;
-  public double RHO_0;
-  public double kpcToMeters = 3.0857e19;
-  public double kpcToKm = 3.0857e16;
+  double v_disk; // km/s
+  double v_DM; // km/s
+  double v_total; // km/s
+  double r; // kpc
+  double speed; // km/s
+  public double R_D; // kpc
+  public double r_c; // kpc
+  public double SIGMA_0; // kg/kpc^2
+  public double RHO_0; // kg/kpc^3
+  public double kpcToMeters = 3.0857e19; // m/kpc
+  public double kpcToKm = 3.0857e16; // km/kpc
   final double G = 6.674e-11; // m^3/kg*s^2
   public final double G_km = 6.674e-20; // km^3/kg*s^2
 
@@ -67,6 +67,7 @@ public class Star {
     applyVelocity(vi);
   }
 
+  // Calculate the velocity of the planet using Newton's law of universal
   double newtonsVelocity(CenterMass centerMass) {
     double orbitalSpeed = Math.sqrt((G * centerMass.mass) / (distance * kpcToMeters)); // Calculate the orbital speed of
                                                                                        // // the plane
@@ -74,6 +75,7 @@ public class Star {
     return speed;
   }
 
+  // Calculate the velocity of the visible disk
   double getVisibleDiskVelocity() {
 
     double y = r / (2 * R_D);
@@ -85,17 +87,19 @@ public class Star {
 
     double result = i0 * k0 - i1 * k1;
 
-    v_disk = Math.sqrt((4 * Math.PI * G_km * SIGMA_0 * R_D * y * y * result));
+    v_disk = Math.sqrt((4 * Math.PI * G_km * SIGMA_0 * R_D * y * y * result)); // km/s
     speed = v_disk;
     return speed;
   }
 
+  // Calculate the velocity of the dark matter
   double getDarkMatteVelocity() {
     v_DM = Math.sqrt(((4 * Math.PI * G_km * RHO_0 * Math.pow(r_c, 3)) / r) * (r / r_c - (Math.atan(r / r_c))));
     speed = v_DM;
     return speed;
   }
 
+  // Calculate the velocity of the visible disk and dark matter
   double getDiskAndDarkMatterVelocity() {
     v_disk = getVisibleDiskVelocity();
     v_DM = getDarkMatteVelocity();
@@ -104,6 +108,7 @@ public class Star {
     return speed;
   }
 
+  // Apply the velocity to the planet
   void applyVelocity(Visualinterface vi) {
 
     if (vi.GetIsPressed1()) {
@@ -129,6 +134,5 @@ public class Star {
     for (int i = 0; i < 10; i++) {
       position.add(PVector.mult(velocity, (float) timeConstant));
     }
-
   }
 }

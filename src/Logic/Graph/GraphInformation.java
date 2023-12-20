@@ -4,10 +4,10 @@ import processing.core.*;
 
 public class GraphInformation {
   PApplet p;
-  boolean pressed1;
-  boolean pressed2;
-  boolean pressed3;
-  boolean pressed4;
+  boolean pressed1; // if the first box is pressed
+  boolean pressed2; // if the second box is pressed
+  boolean pressed3; // if the third box is pressed
+  boolean pressed4; // if the fourth box is pressed
 
   GraphInformation(PApplet p) {
     this.p = p;
@@ -24,21 +24,21 @@ public class GraphInformation {
     p.stroke(255);
     p.strokeWeight(2);
     p.rect(175, 30, 30, 30);
-    p.fill(255);
+    p.fill(125, 125, 125);
     p.textSize(20);
     p.text("Show Newtonian: ", 22, 50);
     p.noFill();
 
     // Second box
     p.rect(375, 30, 30, 30);
-    p.fill(255);
+    p.fill(7, 239, 255);
     p.textSize(20);
     p.text("Show visible disk: ", 220, 50);
     p.noFill();
 
     // Third box
     p.rect(575, 30, 30, 30);
-    p.fill(255);
+    p.fill(255, 0, 255);
     p.textSize(20);
     p.text("Show dark matter: ", 410, 50);
     p.noFill();
@@ -46,7 +46,7 @@ public class GraphInformation {
     p.noFill();
     // Fourth box
     p.rect(420, 60, 30, 30);
-    p.fill(255);
+    p.fill(21, 96, 189);
     p.textSize(20);
     p.text("Show dark matter and visible disk: ", 120, 80);
     p.noFill();
@@ -77,6 +77,7 @@ public class GraphInformation {
     }
     p.noStroke();
 
+    // Check if the mouse is pressed and if it is, check if it is in the box
     if (p.frameCount % 5 == 0) {
       if (p.mousePressed && p.mouseX > 175 && p.mouseX < 205 && p.mouseY > 30 && p.mouseY < 60) {
         pressed1 = !pressed1;

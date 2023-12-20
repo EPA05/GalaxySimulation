@@ -23,6 +23,7 @@ public class VisibleDiskGraph {
 
   }
 
+  // draw the visible disk graph
   public void drawGraph(GraphBackground gb) {
     p.stroke(7, 239, 255); // Set stroke color to magenta
     p.noFill();

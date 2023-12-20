@@ -8,10 +8,10 @@ public class DarkMatterGraph {
   PApplet p;
   GraphBackground gb;
   Star s;
-  float r;
+  float r; // in kpc
 
-  private boolean graphCalculated = false;
-  private PShape graphShape;
+  private boolean graphCalculated = false; // to calculate the graph only once
+  private PShape graphShape; // the shape of the graph
 
   public DarkMatterGraph(PApplet p, Star s) {
     this.p = p;
@@ -20,14 +20,13 @@ public class DarkMatterGraph {
   }
 
   public void drawGraph(GraphBackground gb) {
-    p.stroke(255, 0, 255); // Set stroke color to magenta
+    p.stroke(255, 0, 255);
     p.noFill();
 
     if (!graphCalculated) {
       graphShape = p.createShape();
       graphShape.beginShape();
       for (r = (float) (0.01 * s.kpcToKm); r < 30 * s.kpcToKm; r += 0.01 * s.kpcToKm) {
-
         double v_DM = Math
             .sqrt(((4 * Math.PI * s.G_km * s.RHO_0 * Math.pow(s.r_c, 3)) / r) * (r / s.r_c - (Math.atan(r / s.r_c))));
         float rInKpc = (float) (r * 3.2408e-17);

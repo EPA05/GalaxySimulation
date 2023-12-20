@@ -9,10 +9,10 @@ public class DiskAndDarkMatterGraph {
   PApplet p;
   GraphBackground gb;
   Star s;
-  float r;
+  float r; // in kpc
 
-  private boolean graphCalculated = false;
-  private PShape graphShape;
+  private boolean graphCalculated = false; // to calculate the graph only once
+  private PShape graphShape; // the shape of the graph
 
   public DiskAndDarkMatterGraph(PApplet p, Star s) {
     this.p = p;
@@ -20,8 +20,9 @@ public class DiskAndDarkMatterGraph {
 
   }
 
+  // draw the velocity graph of the disk and dark matter
   public void drawGraph(GraphBackground gb) {
-    p.stroke(21, 96, 189); // Set stroke color to magenta
+    p.stroke(21, 96, 189);
     p.noFill();
 
     if (!graphCalculated) {
