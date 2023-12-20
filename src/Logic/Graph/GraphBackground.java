@@ -71,7 +71,7 @@ public class GraphBackground {
     for (int i = 0; i < numHorizontalLines; i++) {
       float y = graphY + graphHeight - distanceFromEdge - i * horizontalLineSpacing;
       p.line(graphX + distanceFromEdge, y, graphX + distanceFromEdge - 5, y);
-      p.text((i * 50) + " km/s", graphX + distanceFromEdge - 55, y + 5); // Add text at each line
+      p.text((i * 50) + "km/s", graphX + distanceFromEdge - 58, y + 5); // Add text at each line
     }
     p.noStroke();
   }
